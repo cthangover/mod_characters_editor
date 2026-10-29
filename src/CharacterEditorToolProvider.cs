@@ -1,13 +1,11 @@
 using Cthangover.Core.UI.Tool;
-using Cthangover.Mods.Interface.Tool;
 using Godot;
 
 namespace Cthangover.Tools.CharactersEditor
 {
     /// <summary>
-    /// Registers the character editor as a tool: it appears in the main menu's tool
-    /// block and (with <see cref="CharacterEditorToolBoxButton"/>)
-    /// the in-game toolbar.
+    /// Registers the character editor window opened from the in-game toolbar
+    /// through <see cref="CharacterEditorToolBoxButton"/>.
     /// </summary>
     public class CharacterEditorToolProvider : IToolProvider
     {
@@ -19,8 +17,5 @@ namespace Cthangover.Tools.CharactersEditor
 
         /// <summary>Creates the window.</summary>
         public Window CreateWindow() => new CharacterEditorWindow();
-
-        /// <summary>Adds the launcher button to the main menu's tool block.</summary>
-        public void AddMenuButton(Container container) => ToolMenuButton.Attach(container, this);
     }
 }
