@@ -215,7 +215,7 @@ namespace Cthangover.Tools.CharactersEditor.Tests
         {
             step = -1;
             GameLogger.Log("TEST", $"[TEST_RESULT] name=characters_editor_edit passed={passed} failed={failures.Count}");
-            GetTree().Quit(failures.Count == 0 ? 0 : 1);
+            Cthangover.Core.Bootstrap.ApplicationExit.Quit(GetTree(), failures.Count == 0 ? 0 : 1);
         }
     }
 }
