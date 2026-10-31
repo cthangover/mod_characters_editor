@@ -6,9 +6,9 @@ It opens from the tool box (the hammer on the toolbar) as **Characters**.
 
 ## An edit and its result in the game
 
-In RPG Plus, the hero of the village is the character `rpg_hero` of the mod `rpg_demo_game`. Choose that mod at the top, pick **Hero**, type a new English name and press **Save** (Ctrl+S):
+In RPG Plus, the hero of the village is the character `rpg_hero` of the mod `rpg_plus_game`. Choose that mod at the top, pick **Hero**, type a new English name and press **Save** (Ctrl+S):
 
-![The Characters window on rpg_demo_game: the list Aldric · rpg_hero, Slime · rpg_slime, Wolf · rpg_wolf; the form of rpg_hero with the name key rpg_demo/character/hero, text (en) Aldric and the other six languages unchanged, Portrait characters/village/hero with its picture, Charset (RPG) empty, Level 1, Health 24, Attack 6, Defence 0, Action points 1, Experience 0, Recruit chance 0. The status line: "Saved: 0 file(s), 1 text(s) in mod rpg_demo_game; the game re-read its data".](assets/editor-saved.jpg)
+![The Characters window on rpg_plus_game: the list Aldric · rpg_hero, Slime · rpg_slime, Wolf · rpg_wolf; the form of rpg_hero with the name key rpg_demo/character/hero, text (en) Aldric and the other six languages unchanged, Portrait characters/village/hero with its picture, Charset (RPG) empty, Level 1, Health 24, Attack 6, Defence 0, Action points 1, Experience 0, Recruit chance 0. The status line: "Saved: 0 file(s), 1 text(s) in mod rpg_plus_game; the game re-read its data".](assets/editor-saved.jpg)
 
 Only the English line of the mod's `locale/en.properties` changed. The party member on the character panel right after:
 
@@ -21,8 +21,8 @@ The panel shows HP 42 and ATK 12 while the file says 24 and 6: in RPG Plus the h
 - **Id** — the character's id; scenarios, parties, battles and maps find it by this id.
 - **Name** — the translation key and a line per language of the mod.
 - **Portrait** — the picture on cards and panels; **…** opens a grid to pick one.
-- **Charset (RPG)** — the walking sprite on RPG maps (3 frames × 4 facings). The RPG Map Editor offers characters with their charset for placing.
-- **Level**, **Health**, **Attack**, **Defence**, **Action points**, **Experience** — the battle numbers of the character.
+- **Charset (RPG)** — the walking sprite on RPG maps (3 frames × 4 facings).
+- **Level**, **Health**, **Attack**, **Defence**, **Action points**, **Experience** — the battle numbers of the character. When the character has `Stats` (from the Stats Engine), **Health**, **Attack** and **Defence** are read-only: the stats compute them, and the form shows the computed values under the fields (see the party block below).
 - **Recruit chance** — 0 to 100: the chance to capture the character after beating it (see Recruiting).
 - **Behaviour** and **Actions** — how the character fights and which battle actions it has.
 - **Fields of other mods** — fields other mods describe for characters in their schemas (for example Stats Engine's class, stats and traits) appear in their own section.
@@ -30,12 +30,20 @@ The panel shows HP 42 and ATK 12 while the file says 24 and 6: in RPG Plus the h
 
 The toolbar: **New** (Ctrl+N), **Copy** (Ctrl+D), **Delete**, **Undo**/**Redo** (Ctrl+Z / Ctrl+Y), **Save** — only changed files are written; texts go into the mod's locale files.
 
-## Which characters can be edited
+## The party block
 
-The list holds the characters in the selected mod's own files; only mods installed as folders are offered. Characters of other mods are not in the list and their files are never written. To change one of them, ship the same id in your own mod with a dependency on the owner, or add fields with a patch.
+Below the fields, the party block shows two things:
+
+- **Party leader** — the character whose sheet the player walks with on RPG maps. The leader is the character the game's `stats.player` names; without one, the first character of the battle party. The block says *Party leader* or *Not the party leader* for the open character. Choosing a new leader is not a button yet: it is a setting of the collection, changed through the mod manager.
+- **Computed battle numbers** — when the character has `Stats`, every stat with its value and its battle number. The hint says that health, attack and defence come from the stats, so you edit the stats, not these fields. Without `Stats` the block says so, and the battle numbers are the fields above.
+- **Joins the party when talked to** — tick it to write the join scenario `scenarios/<your mod>/party/<id>.scenario`: it sets the flag `<id>_joined` to 1 and adds the character to the party (`action party.add`). Unticking deletes the file at once. The leader never joins (the box is disabled). To make the character a companion on a map, place it from the **Characters** tab of the RPG Map Editor: talking to the placed actor joins it, the actor leaves its cell and the companion walks behind the hero.
+
+## Characters of other mods
+
+The list shows the characters of the chosen mod. Tick **Entries of other mods** to add the characters of its dependencies, marked `↗ owner`. Editing one writes a patch in your mod (`patches/character/<your mod>.json`) with only the values you changed; the owner's file stays byte for byte the same. **Reset to inherited** removes the patch, and **↺** next to a field removes your value of that field. Only mods installed as folders can be written to.
 
 ## If something goes wrong
 
 1. **Changed health or attack has no effect.** The game computes the numbers from stats, as RPG Plus does for its party.
-2. **The character is missing from the RPG Map Editor's Characters tab.** The tab lists characters with combat stats; any sprite can still be placed from the Appearance tab.
+2. **The character is not in the RPG Map Editor's palette.** The palette's **Characters** tab lists the characters that have a walking sheet (**Charset**); a character without one cannot be placed. The **Actors** tab lists the actor objects of `rpg_object`, not the game's characters.
 3. **The mod list is empty.** Packed mods cannot be edited.

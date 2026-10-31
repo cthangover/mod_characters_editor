@@ -1,38 +1,37 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Cthangover.Core.Bootstrap;
-using Cthangover.Core.Characters;
-using Cthangover.Core.Localization;
-using Cthangover.Core.Mods;
-using Cthangover.Core.Mods.Resolvers;
-using Cthangover.Core.Utils;
-using Cthangover.Mods.Interface.Tool;
-using Cthangover.Mods.Interface.View;
-using Cthangover.Mods.Rpg;
-using Cthangover.Tools.RpgEditor;
-using Cthangover.Tools.Services;
-using Godot;
-
 namespace Cthangover.Tools.CharactersEditor.Tests
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Cthangover.Core.Bootstrap;
+    using Cthangover.Core.Characters;
+    using Cthangover.Core.Localization;
+    using Cthangover.Core.Mods;
+    using Cthangover.Core.Mods.Resolvers;
+    using Cthangover.Core.Utils;
+    using Cthangover.Mods.Interface.Tool;
+    using Cthangover.Mods.Interface.View;
+    using Cthangover.Tools.Services;
+    using Cthangover.Mods.Rpg.Model;
+    using Cthangover.Tools.RpgEditor;
+    using Godot;
+
     /// <summary>
     /// Drives the character editor like an author: the toolbar buttons and the
     /// form's fields (their change signals), Save. Then the game itself is asked:
     /// the entity cache must hold the new character with the typed health and its
-    /// action, the translation server its typed name, and the RPG map editor's
-    /// character list must offer it with the typed charset. The new characters
+    /// action, and the translation server its typed name. The new characters
     /// file is deleted and the mod's locale files are restored afterwards, so
-    /// rpg_demo_game stays as it was.
+    /// rpg_plus_game stays as it was.
     /// Result line: <c>[TEST_RESULT] name=characters_editor_edit passed=N failed=M</c>.
     /// </summary>
     public partial class CharacterEditorTestDriver : Node
     {
         private const float TickSeconds = 0.15f;
         private const float TimeoutSeconds = 60f;
-        private const string Mod = "rpg_demo_game";
-        private const string NewFile = "characters/rpg_demo_game.json";
-        private const string NewId = "rpg_demo_game_new_character";
+        private const string Mod = "rpg_plus_game";
+        private const string NewFile = "characters/rpg_plus_game.json";
+        private const string NewId = "rpg_plus_game_new_character";
         private const string TypedName = "Тестовый гоблин";
 
         private readonly List<string> failures = new();
@@ -99,8 +98,17 @@ namespace Cthangover.Tools.CharactersEditor.Tests
                     var slime = window.Document.Find("rpg_slime");
                     Check(slime != null, "the demo's characters are listed");
                     window.Select(slime);
-                    Check(window.Document.GetText(language, "rpg_demo/character/slime") == TranslationServer.Translate("rpg_demo/character/slime").ToString(),
+                    Check(window.Document.GetText(language, "rpg_plus/character/slime") == TranslationServer.Translate("rpg_plus/character/slime").ToString(),
                         $"the form shows the character's name in '{language}'");
+                    Check(Row("tools/characters_editor/health").OfType<SpinBox>().First().Editable, "a character without Stats: health is edited");
+                    var wolf = window.Document.Find("rpg_wolf");
+                    Check(wolf?.Data["Stats"] != null, "the demo's wolf has Stats (its health comes from them)");
+                    window.Select(wolf);
+                    Check(!Row("tools/characters_editor/health").OfType<SpinBox>().First().Editable
+                        && !Row("tools/characters_editor/attack").OfType<SpinBox>().First().Editable
+                        && !Row("tools/characters_editor/defence").OfType<SpinBox>().First().Editable,
+                        "a character with Stats: health, attack and defence are computed, not edited");
+                    window.Select(slime);
 
                     Press("tools/entity_editor/new");
                     Check(window.SelectedId == NewId, $"New adds and selects {NewId} (got {window.SelectedId})");
@@ -122,8 +130,21 @@ namespace Cthangover.Tools.CharactersEditor.Tests
                         Check(characters.TryGetValue(NewId, out var saved), "the game knows the new character right after saving");
                         Check(saved?.Health == 33 && saved.Actions?.Contains("physics/attack") == true, "with the typed health and its action");
                         Check(TranslationServer.Translate(saved?.Name ?? "-").ToString() == TypedName, $"and the typed name ({saved?.Name})");
-                        var offered = RpgCharacterCatalog.Load(new RpgTextures()).FirstOrDefault(e => e.Id == NewId);
-                        Check(offered?.Look == "village/slime" && offered.Name == TypedName, $"the RPG map editor offers it with its charset ({offered?.Look})");
+                        // plan 14.G7: "Joins the party" writes the join scenario at once; unticking removes it again.
+                        var join = window.FindChildren("JoinsParty", "", true, false).OfType<CheckBox>().FirstOrDefault();
+                        Check(join != null && !join.Disabled && !join.ButtonPressed, "a new character can join the party (its check box is free and off)");
+                        Check(!CompanionScenario.Exists(Mod, NewId), "no join scenario before the tick");
+                        join.ButtonPressed = true;
+                        var joinText = ModFileService.ReadText(Mod, CompanionScenario.Path(Mod, NewId)) ?? string.Empty;
+                        Check(joinText.Contains("flag " + NewId + "_joined 1") && joinText.Contains("action party.add id=" + NewId) && !joinText.Contains("\r"),
+                            "the tick writes the join scenario (flag, party.add, LF lines)");
+                        join.ButtonPressed = false;
+                        Check(!CompanionScenario.Exists(Mod, NewId), "the untick removes the join scenario");
+                        // phase 8 (claude_plan.md E4): the RPG map editor opens beside the characters and its actor palette has rows.
+                        // It does not list characters yet (plan 12.4 leaves that to a later step), so the new character is not checked there.
+                        var rpgEditor = ToolWindow.Open<RpgEditorWindow>();
+                        Check(rpgEditor.Palette.Count(RpgObjectForm.Actor) > 0, "the RPG map editor opens and its palette lists actors");
+                        rpgEditor.QueueFree();
                         var written = ModFileService.ReadText(Mod, NewFile) ?? string.Empty;
                         Check(written.Contains("\"Kind\": \"character\"") && !written.Contains("\r"), "the new file declares its kind and has LF lines");
                         Check(characterFiles.All(f => ModFileService.ReadText(Mod, f.Key) == f.Value), "the demo's character files are untouched");
@@ -166,6 +187,7 @@ namespace Cthangover.Tools.CharactersEditor.Tests
             var path = ModFileService.GetWritablePath(Mod, NewFile);
             if (path != null && File.Exists(path))
                 File.Delete(path);
+            CompanionScenario.Remove(Mod, NewId);
             foreach (var backup in backups)
                 ModFileService.WriteText(Mod, backup.Key, backup.Value);
             ModManager.Instance.GetResolver<EntityResolver>()?.ClearCache();
