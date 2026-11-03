@@ -25,10 +25,16 @@ The panel shows HP 42 and ATK 12 while the file says 24 and 6: in RPG Plus the h
 - **Level**, **Health**, **Attack**, **Defence**, **Action points**, **Experience** — the battle numbers of the character. When the character has `Stats` (from the Stats Engine), **Health**, **Attack** and **Defence** are read-only: the stats compute them, and the form shows the computed values under the fields (see the party block below).
 - **Recruit chance** — 0 to 100: the chance to capture the character after beating it (see Recruiting).
 - **Behaviour** and **Actions** — how the character fights and which battle actions it has.
+- **Loot** — what drops when the character is defeated as an enemy: a list of rows, each with an item (a picker of the items the game knows), a minimum and a maximum count and a chance from 0 to 100.
 - **Fields of other mods** — fields other mods describe for characters in their schemas (for example Stats Engine's class, stats and traits) appear in their own section.
+- **Id** of a saved character is read-only; **Rename…** under it changes the id and the references to it (see below).
 - **Other fields** — the rest of the character's JSON, edited as JSON and kept as it is.
 
 The toolbar: **New** (Ctrl+N), **Copy** (Ctrl+D), **Delete**, **Undo**/**Redo** (Ctrl+Z / Ctrl+Y), **Save** — only changed files are written; texts go into the mod's locale files.
+
+## Renaming an id
+
+**Rename…** under the Id of a saved character asks for the new id and lists every file that names the character before anything is written: the character's own file, the scenarios that give it to a party or start a battle with it, the placements and maps that place it. Files of other mods that name it are only listed, and they are not changed. **Rename** saves your pending edits first; **Undo rename** in the toolbar puts every changed file back exactly as it was. Ids take letters, digits, `_`, `-` and `/` between their parts, and must be free in every mod.
 
 ## The party block
 
@@ -36,7 +42,7 @@ Below the fields, the party block shows two things:
 
 - **Party leader** — the character whose sheet the player walks with on RPG maps. The leader is the character the game's `stats.player` names; without one, the first character of the battle party. The block says *Party leader* or *Not the party leader* for the open character. Choosing a new leader is not a button yet: it is a setting of the collection, changed through the mod manager.
 - **Computed battle numbers** — when the character has `Stats`, every stat with its value and its battle number. The hint says that health, attack and defence come from the stats, so you edit the stats, not these fields. Without `Stats` the block says so, and the battle numbers are the fields above.
-- **Joins the party when talked to** — tick it to write the join scenario `scenarios/<your mod>/party/<id>.scenario`: it sets the flag `<id>_joined` to 1 and adds the character to the party (`action party.add`). Unticking deletes the file at once. The leader never joins (the box is disabled). To make the character a companion on a map, place it from the **Characters** tab of the RPG Map Editor: talking to the placed actor joins it, the actor leaves its cell and the companion walks behind the hero.
+- **Joins the party when talked to** — tick it to write the join scenario `scenarios/<your mod>/party/<id>.scenario`: it sets the flag `<id>_joined` to 1 and adds the character to the party (`action party.add`). Unticking deletes the file at once. The leader never joins (the box is disabled). If the character's actor object already has a dialog (its **Interaction** opens a scenario or has its own lines), the join comes after that dialog: the dialog plays, then the character joins, and the dialog is not replaced. The map editor writes this when the character is chosen in its **Characters** tab. To make the character a companion on a map, place it from the **Characters** tab of the RPG Map Editor: talking to the placed actor joins it, the actor leaves its cell and the companion walks behind the hero.
 
 ## Characters of other mods
 
