@@ -10,6 +10,8 @@ RPG Plus では、村の英雄は MOD `rpg_plus_game` のキャラクター `rpg
 
 ![rpg_plus_game の「キャラクター」ウィンドウ: 一覧は Aldric · rpg_hero、スライム · rpg_slime、狼 · rpg_wolf。rpg_hero のフォーム、名前キー rpg_demo/character/hero、テキスト (en) Aldric、ほかの六言語は変更なし、肖像 characters/village/hero とその画像、キャラチップ（RPG）は空、レベル 1、体力 24、攻撃 6、防御 0、行動ポイント 1、経験値 0、勧誘の確率 0。ステータス行:「保存しました: MOD rpg_plus_game のファイル 0、テキスト 1。ゲームはデータを読み直しました」。](assets/editor-saved.jpg)
 
+エディタの図は以前の撮影です。表示される `rpg_demo/` キーや `rpg_tileset` パレットは旧版のもので、本文の現行 `rpg_plus/` キーと `rpg_object` モデルを使ってください。
+
 変わったのは MOD の `locale/en.properties` の英語の行だけです。直後のキャラクターパネルのパーティメンバー:
 
 ![キャラクターアクションパネル: パーティメンバーは今や Aldric（rpg_hero、HP 42/42、AP 1、ATK 12、DEF 4）で、基本攻撃、防御、強打を持ちます。](assets/panel-after.jpg)

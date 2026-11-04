@@ -10,6 +10,8 @@ RPG Plus에서 마을의 영웅은 모드 `rpg_plus_game`의 캐릭터 `rpg_hero
 
 ![rpg_plus_game의 "캐릭터" 창: 목록에는 Aldric · rpg_hero, 슬라임 · rpg_slime, 늑대 · rpg_wolf. rpg_hero의 양식, 이름 키 rpg_demo/character/hero, 텍스트 (en) Aldric, 나머지 여섯 언어는 그대로, 초상화 characters/village/hero와 그 그림, 캐릭터 시트 (RPG) 비어 있음, 레벨 1, 체력 24, 공격 6, 방어 0, 행동 포인트 1, 경험치 0, 영입 확률 0. 상태 줄: "저장함: 모드 rpg_plus_game의 파일 0개, 텍스트 1개. 게임이 데이터를 다시 읽었습니다".](assets/editor-saved.jpg)
 
+편집기 그림은 이전 캡처입니다. 보이는 `rpg_demo/` 키나 `rpg_tileset` 팔레트는 구버전이며 본문의 현재 `rpg_plus/` 키와 `rpg_object` 모델을 사용하세요.
+
 바뀐 것은 모드 `locale/en.properties`의 영어 한 줄입니다. 바로 뒤 캐릭터 패널의 파티원:
 
 ![캐릭터 액션 패널: 파티원은 이제 Aldric(rpg_hero, HP 42/42, AP 1, ATK 12, DEF 4)이며 기본 공격, 방어, 강타를 가집니다.](assets/panel-after.jpg)

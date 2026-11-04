@@ -10,6 +10,8 @@ Trong RPG Plus, anh hùng của ngôi làng là nhân vật `rpg_hero` của mod
 
 ![Cửa sổ Nhân vật trên rpg_plus_game: danh sách Aldric · rpg_hero, Slime · rpg_slime, Sói · rpg_wolf; biểu mẫu của rpg_hero với khóa tên rpg_demo/character/hero, văn bản (en) Aldric và sáu ngôn ngữ còn lại giữ nguyên, Chân dung characters/village/hero cùng hình của nó, Charset (RPG) trống, Cấp độ 1, Máu 24, Tấn công 6, Phòng thủ 0, Điểm hành động 1, Kinh nghiệm 0, Tỉ lệ chiêu mộ 0. Dòng trạng thái: "Đã lưu: 0 tệp, 1 văn bản trong mod rpg_plus_game; game đã đọc lại dữ liệu".](assets/editor-saved.jpg)
 
+Hình trình sửa được chụp trước đây. Khóa `rpg_demo/` hoặc bảng `rpg_tileset` trong hình là của bản cũ; dùng khóa `rpg_plus/` và mô hình `rpg_object` hiện tại trong bài.
+
 Chỉ dòng tiếng Anh trong `locale/en.properties` của mod thay đổi. Ngay sau đó, thành viên tổ đội trên bảng nhân vật:
 
 ![Bảng hành động nhân vật: thành viên tổ đội giờ tên là Aldric (rpg_hero, HP 42/42, AP 1, ATK 12, DEF 4) với Đánh cơ bản, Phòng thủ và Cú đánh mạnh.](assets/panel-after.jpg)
