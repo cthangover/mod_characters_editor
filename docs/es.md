@@ -10,6 +10,8 @@ En RPG Plus, el héroe de la aldea es el personaje `rpg_hero` del mod `rpg_plus_
 
 ![La ventana Personajes sobre rpg_plus_game: la lista Aldric · rpg_hero, Limo · rpg_slime, Lobo · rpg_wolf; el formulario de rpg_hero con la clave del nombre rpg_demo/character/hero, texto (en) Aldric y los otros seis idiomas sin cambios, Retrato characters/village/hero con su imagen, Charset (RPG) vacío, Nivel 1, Salud 24, Ataque 6, Defensa 0, Puntos de acción 1, Experiencia 0, Probabilidad de reclutar 0. La línea de estado: «Guardado: 0 archivo(s), 1 texto(s) en el mod rpg_plus_game; el juego releyó sus datos».](assets/editor-saved.jpg)
 
+La imagen del editor es de una captura anterior: las claves `rpg_demo/` o la paleta `rpg_tileset` que aparecen son históricas. Usa las claves actuales `rpg_plus/` y el modelo `rpg_object` descritos en el texto.
+
 Solo cambió la línea en inglés del `locale/en.properties` del mod. El miembro del grupo en el panel de personajes justo después:
 
 ![El panel de acciones del personaje: el miembro del grupo ahora se llama Aldric (rpg_hero, HP 42/42, AP 1, ATK 12, DEF 4) con Ataque básico, Defensa y Golpe poderoso.](assets/panel-after.jpg)

@@ -10,6 +10,8 @@ RPG Plus 里村庄的英雄是模组 `rpg_plus_game` 的角色 `rpg_hero`。顶�
 
 ![rpg_plus_game 上的「角色」窗口：列表中有 Aldric · rpg_hero、史莱姆 · rpg_slime、狼 · rpg_wolf；rpg_hero 的表单，名称键 rpg_demo/character/hero，文本 (en) Aldric，其余六种语言未变，立绘 characters/village/hero 及其图片，行走图（RPG）为空，等级 1，生命 24，攻击 6，防御 0，行动点 1，经验 0，招募几率 0。状态行：「已保存：模组 rpg_plus_game 中 0 个文件、1 条文本；游戏已重新读取数据」。](assets/editor-saved.jpg)
 
+编辑器插图来自较早的截图，其中的 `rpg_demo/` 键或 `rpg_tileset` 面板属于旧版。请使用正文中的当前 `rpg_plus/` 键与 `rpg_object` 模型。
+
 只有模组 `locale/en.properties` 的英文一行变了。紧接着角色面板上的队伍成员：
 
 ![角色行动面板：队伍成员现在叫 Aldric（rpg_hero，HP 42/42，AP 1，ATK 12，DEF 4），带普通攻击、防御和强力一击。](assets/panel-after.jpg)

@@ -10,6 +10,8 @@ In RPG Plus, the hero of the village is the character `rpg_hero` of the mod `rpg
 
 ![The Characters window on rpg_plus_game: the list Aldric · rpg_hero, Slime · rpg_slime, Wolf · rpg_wolf; the form of rpg_hero with the name key rpg_demo/character/hero, text (en) Aldric and the other six languages unchanged, Portrait characters/village/hero with its picture, Charset (RPG) empty, Level 1, Health 24, Attack 6, Defence 0, Action points 1, Experience 0, Recruit chance 0. The status line: "Saved: 0 file(s), 1 text(s) in mod rpg_plus_game; the game re-read its data".](assets/editor-saved.jpg)
 
+The editor illustration is from an earlier capture. Legacy `rpg_demo/` keys or an `rpg_tileset` palette visible in it are historical; use the current `rpg_plus/` keys and `rpg_object` model described in the text.
+
 Only the English line of the mod's `locale/en.properties` changed. The party member on the character panel right after:
 
 ![The Character actions panel: the party member is now called Aldric (rpg_hero, HP 42/42, AP 1, ATK 12, DEF 4) with Basic attack, Defence and Power strike.](assets/panel-after.jpg)
