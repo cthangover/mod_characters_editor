@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "author": "ct",
   "description": "Edits a mod's characters while the game runs: names in every language, portrait, RPG walking sprite, battle numbers and actions. A save reaches the running game at once.",
-  "category": "tools, editor",
+  "categories": ["tools", "editor"],
   "sources": [
     "src/**/*.cs"
   ],
