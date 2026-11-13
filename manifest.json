@@ -1,7 +1,7 @@
 {
   "id": "characters_editor",
   "name": "Characters Editor",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "author": "ct",
   "description": "Edits a mod's characters while the game runs: names in every language, portrait, RPG walking sprite, battle numbers and actions. A save reaches the running game at once.",
   "category": "tools, editor",
@@ -12,10 +12,10 @@
     "tests/*.cs"
   ],
   "depends": [
-    "tools_base>=1",
-    "characters_base>=1",
-    "stats_base>=1",
-    "ui_base>=1"
+    "tools_base>=0.1.0",
+    "characters_base>=0.1.0",
+    "stats_base>=0.1.0",
+    "ui_base>=0.1.0"
   ],
   "test_suites": [
     {
